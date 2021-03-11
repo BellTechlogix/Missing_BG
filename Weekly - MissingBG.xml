@@ -51,7 +51,7 @@
     <Exec>
       <Command>Powershell</Command>
 	  <!--Name of the script and the path to find it on-->
-      <Arguments>.\MissingBG_subnet.ps1</Arguments>
+      <Arguments>.\Missing_BG.ps1</Arguments>
       <WorkingDirectory>F:\Scripts</WorkingDirectory>
     </Exec>
   </Actions>

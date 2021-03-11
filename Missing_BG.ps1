@@ -291,8 +291,8 @@ FOREACH($dev in $cmdevices)
     LEFT JOIN v_GS_WORKSTATION_STATUS HWSCAN on SYS.ResourceID = HWSCAN.ResourceID
     WHERE SYS.Netbios_Name0 = @Name
 "@
-    $dev.'Subnet' = [system.string]::Join(", ",(Get-WmiObject -Namespace "root\SMS\site_CRW" -Class SMS_R_System -ComputerName JAXSCCM02 -Filter "Name like '$($dev.Name)'" | Select-Object -Property IPSubnets).IPSubnets)
-    $dev.'IP Address' = [system.string]::Join(", ",(Get-WmiObject -Namespace "root\SMS\site_CRW" -Class SMS_R_System -ComputerName JAXSCCM02 -Filter "Name like '$($dev.Name)'" | Select-Object -Property IPAddresses).IPAddresses)
+    $dev.'Subnet' = [system.string]::Join(", ",(Get-WmiObject -Namespace "root\SMS\site_$SiteCode" -Class SMS_R_System -ComputerName $ProviderMachineName -Filter "Name like '$($dev.Name)'" | Select-Object -Property IPSubnets).IPSubnets)
+    $dev.'IP Address' = [system.string]::Join(", ",(Get-WmiObject -Namespace "root\SMS\site_$SiteCode" -Class SMS_R_System -ComputerName $ProviderMachineName -Filter "Name like '$($dev.Name)'" | Select-Object -Property IPAddresses).IPAddresses)
     $dev.hwscan = (invoke-SQLQuery -Database $DB -Query $string).LastHWScan
     
 	#Nulls the variables inbetween each loop
