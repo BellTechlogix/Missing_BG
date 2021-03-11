@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-16"?>
+<Task version="1.2" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+<!--This XML is to be imported into scheduled tasks to schedule your script-->
+  <RegistrationInfo>
+    <Date>2020-01-21T14:20:46.9392911</Date>
+	<!--The Author field should be replaced with your domain\username-->
+    <Author>domain\username</Author>
+  </RegistrationInfo>
+  <Triggers>
+    <CalendarTrigger>
+	<!--The Start Boundary should be set to the date you want the task to begin-->
+      <StartBoundary>2020-01-21T08:00:00</StartBoundary>
+      <Enabled>true</Enabled>
+      <ScheduleByWeek>
+        <DaysOfWeek>
+		<!--What day of the Week do you wish your task to run?-->
+          <Wednesday />
+        </DaysOfWeek>
+        <WeeksInterval>1</WeeksInterval>
+      </ScheduleByWeek>
+    </CalendarTrigger>
+  </Triggers>
+  <Principals>
+    <Principal id="Author">
+	<!--UserID is the admin account you wish the task to run with-->
+      <UserId>domain\adminaccount</UserId>
+      <LogonType>Password</LogonType>
+      <RunLevel>HighestAvailable</RunLevel>
+    </Principal>
+  </Principals>
+  <Settings>
+    <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+    <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+    <StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>
+    <AllowHardTerminate>true</AllowHardTerminate>
+    <StartWhenAvailable>true</StartWhenAvailable>
+    <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+    <IdleSettings>
+      <StopOnIdleEnd>true</StopOnIdleEnd>
+      <RestartOnIdle>false</RestartOnIdle>
+    </IdleSettings>
+    <AllowStartOnDemand>true</AllowStartOnDemand>
+    <Enabled>true</Enabled>
+    <Hidden>false</Hidden>
+    <RunOnlyIfIdle>false</RunOnlyIfIdle>
+    <WakeToRun>true</WakeToRun>
+    <ExecutionTimeLimit>PT12H</ExecutionTimeLimit>
+    <Priority>7</Priority>
+  </Settings>
+  <Actions Context="Author">
+    <Exec>
+      <Command>Powershell</Command>
+	  <!--Name of the script and the path to find it on-->
+      <Arguments>.\MissingBG_subnet.ps1</Arguments>
+      <WorkingDirectory>F:\Scripts</WorkingDirectory>
+    </Exec>
+  </Actions>
+</Task>
