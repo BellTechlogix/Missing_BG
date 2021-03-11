@@ -308,3 +308,9 @@ $emailBody = "<h1 style='color: #5e9ca0;'>Missing Boundary Group Report</h1>"
 $emailBody = $emailBody + "<h2 style='color: #2e6c80;'>Number of Machines: <span style='color: #000000;'><strong>$CMDevicesCount</strong></span></h2>"
 
 Send-MailMessage -from $from -to $recipients -subject "$ORG - SCCM Missing BG Report" -BodyAsHtml $emailBody -smtpserver $smtp -Attachments "$rptFolder$runtime-MissingBG.csv"
+
+#Cleanup Old Files
+$Daysback = '-14'
+$CurrentDate = Get-Date
+$DateToDelete = $CurrentDate.AddDays($Daysback)
+Get-ChildItem $rptFolder | Where-Object { $_.LastWriteTime -lt $DatetoDelete -and $_.Name -like "*MissingBG*"} | Remove-Item
