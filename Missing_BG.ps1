@@ -18,6 +18,12 @@ $org = "My Org"
 #SCCM DB
 $DB = "CM_sitecode"
 
+# Site code
+$SiteCode = "SMS"
+
+# SMS Provider machine name
+$ProviderMachineName = "SCCM.domain.com"
+
 #folder to store completed reports
 $rptfolder = "c:\reports\"
 
@@ -32,6 +38,22 @@ $smtp = "mail.wherever.com"
 
 #Timestamp
 $runtime = Get-Date -Format "yyyyMMMdd"
+
+# Customizations
+$initParams = @{}
+
+#Connect to SCCM and Import the ConfigurationManager.psd1 module 
+if((Get-Module ConfigurationManager) -eq $null) {
+    Import-Module "$($ENV:SMS_ADMIN_UI_PATH)\..\ConfigurationManager.psd1" @initParams 
+}
+
+# Connect to the site's drive if it is not already present
+if((Get-PSDrive -Name $SiteCode -PSProvider CMSite -ErrorAction SilentlyContinue) -eq $null) {
+    New-PSDrive -Name $SiteCode -PSProvider CMSite -Root $ProviderMachineName @initParams
+}
+
+# Set the current location to be the site code.
+Set-Location "$($SiteCode):\" @initParams
 
 Function Invoke-SQLQuery {   
     <#
